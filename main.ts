@@ -1,22 +1,36 @@
 input.onButtonPressed(Button.A, function () {
+    led.stopAnimation()
+    basic.clearScreen()
     if (Type < 6) {
         Type = 6
     } else if (Type < 8) {
         Type = 8
+    } else if (Type < 10) {
+        Type = 10
+    } else if (Type < 12) {
+        Type = 12
+    } else if (Type < 20) {
+        Type = 20
+    } else if (Type < 100) {
+        Type = 100
     } else {
         Type = 4
     }
     basic.showNumber(Type)
 })
+input.onButtonPressed(Button.B, function () {
+    led.stopAnimation()
+    Roll = 1
+})
 input.onGesture(Gesture.Shake, function () {
     led.stopAnimation()
-    Roll = 5
+    Roll = 1
 })
 function drawDice (num: number) {
     if (Type == 6) {
         if (num == 1) {
             basic.showLeds(`
-                . # . . .
+                . . . . .
                 . . . . .
                 . . # . .
                 . . . . .
@@ -66,7 +80,13 @@ function drawDice (num: number) {
         	
         }
     } else {
-        basic.showNumber(num)
+        if (Type == 10) {
+            basic.showNumber(num - 1)
+        } else if (Type == 100) {
+            basic.showNumber(num % 10 * 10)
+        } else {
+            basic.showNumber(num)
+        }
     }
 }
 let Type = 0
